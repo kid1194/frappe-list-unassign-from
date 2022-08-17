@@ -1,6 +1,6 @@
 [project]
 name = "frappe_list_unassign_from"
-version = "1.0.0"
+version = "1.0.1"
 authors = [
     {name = "Ameen Ahmed (Level Up)", email = "kid1194@gmail.com"}
 ]

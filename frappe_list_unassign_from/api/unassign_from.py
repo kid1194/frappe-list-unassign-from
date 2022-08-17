@@ -11,7 +11,8 @@ def search_link(doctype, txt, searchfield, start, page_len, filters):
     
     dToDo = frappe.qb.DocType('ToDo')
     qTodo = frappe.qb.from_(dToDo)
-        .where(dToDo.name.isin(filters.get('docname')))
+        .where(dToDo.reference_type.eq(doctype))
+        .where(dToDo.reference_name.isin(filters.get('docname')))
         .limit(page_len)
         .offset(start)
     

@@ -1,4 +1,4 @@
-export default class UnassignFromDialog {
+export class UnassignFromDialog {
     constructor(opts) {
         $.extend(this, opts);
 

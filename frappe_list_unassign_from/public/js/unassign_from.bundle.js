@@ -1,10 +1,10 @@
-import CustomBulkOperations from './libs/custom_bulk_operations';
+import {CustomBulkOperations} from './libs/custom_bulk_operations.js';
 
 frappe.views.ListView = class ListView extends frappe.views.ListView {
     get_actions_menu_items() {
         const doctype = this.doctype;
         const actions_menu_items = super.get_actions_menu_items();
-        const bulk_operations = new CustomBulkOperations({ doctype: this.doctype });
+        const bulk_operations = new CustomBulkOperations({doctype: this.doctype});
 
         const is_field_editable = (field_doc) => {
             return (

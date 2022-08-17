@@ -1,4 +1,4 @@
-import UnassignFromDialog from './unassign_from_dialog';
+import {UnassignFromDialog} from './unassign_from_dialog.js';
 
 export default class CustomBulkOperations {
     constructor({ doctype }) {
@@ -6,7 +6,7 @@ export default class CustomBulkOperations {
         this.doctype = doctype;
     }
     // unassignment
-    unassign (docnames, done) {
+    unassign(docnames, done) {
         if (docnames.length > 0) {
             const unassign_from = new UnassignFromDialog({
                 obj: this,

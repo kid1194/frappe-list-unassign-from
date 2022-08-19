@@ -1,4 +1,6 @@
-import {CustomBulkOperations} from './libs/custom_bulk_operations.js';
+import {
+    CustomBulkOperations
+} from './libs/custom_bulk_operations.js';
 
 frappe.views.ListView = class ListView extends frappe.views.ListView {
     get_actions_menu_items() {
@@ -23,21 +25,17 @@ frappe.views.ListView = class ListView extends frappe.views.ListView {
                 .some((field_doc) => is_field_editable(field_doc));
         };
         
-        const is_v13 = cint(String(window._version_number).split('.')[0]) < 14;
-        
         // unassignment
         const bulk_unassignment = () => {
             return {
                 label: __("Unassign From", null, "Button in list view actions menu"),
                 action: () => {
-                    if (!is_v13) this.disable_list_update = true;
+                    this.disable_list_update = true;
                     bulk_operations.unassign(
                         this.get_checked_items(true),
                         () => {
-                            if (!is_v13) {
-                                this.disable_list_update = false;
-                                this.clear_checked_items();
-                            }
+                            this.disable_list_update = false;
+                            this.clear_checked_items();
                             this.refresh();
                         }
                     );
@@ -46,8 +44,7 @@ frappe.views.ListView = class ListView extends frappe.views.ListView {
             };
         };
         
-        let idx = 2;
-        if (!is_v13) idx++;
+        let idx = 3;
         // bulk edit
         if (has_editable_fields(doctype)) idx++;
         // unassignment

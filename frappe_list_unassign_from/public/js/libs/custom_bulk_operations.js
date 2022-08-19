@@ -1,4 +1,6 @@
-import {UnassignFromDialog} from './unassign_from_dialog.js';
+import {
+    UnassignFromDialog
+} from './unassign_from_dialog.js';
 
 export default class CustomBulkOperations {
     constructor({ doctype }) {

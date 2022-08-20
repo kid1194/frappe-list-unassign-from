@@ -2,7 +2,7 @@ import {
     UnassignFromDialog
 } from './unassign_from_dialog.js';
 
-export default class CustomBulkOperations {
+export class CustomBulkOperations {
     constructor({ doctype }) {
         if (!doctype) frappe.throw(__('Doctype required'));
         this.doctype = doctype;

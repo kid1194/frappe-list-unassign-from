@@ -10,11 +10,13 @@ def search_link(doctype, txt, searchfield, start, page_len, filters):
         return []
     
     dToDo = frappe.qb.DocType('ToDo')
-    qTodo = frappe.qb.from_(dToDo)
-        .where(dToDo.reference_type.eq(doctype))
+    qTodo = (
+        frappe.qb.from_(dToDo)
+        .where(dToDo.reference_type == doctype)
         .where(dToDo.reference_name.isin(filters.get('docname')))
         .limit(page_len)
         .offset(start)
+    )
     
     if not txt:
         qTodo.select(dToDo.allocated_to)

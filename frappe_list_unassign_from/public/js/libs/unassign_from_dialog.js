@@ -67,7 +67,7 @@ export class UnassignFromDialog {
                 fieldtype: 'Check',
                 fieldname: 'unassign_from_me',
                 default: 0,
-                onchange: () => me.unassign_from_me()
+                onchange: function() { me.unassign_from_me() }
             },
             {
                 fieldtype: 'MultiSelectPills',
@@ -75,26 +75,24 @@ export class UnassignFromDialog {
                 label: __("Unassign From"),
                 reqd: true,
                 get_data: function(txt) {
-                    let doctype = me.doctype,
-                    query = 'frappe_list_unassign_from.api.unassign_from.search_link',
-                    filters = {docname: me.docname};
-                    return new Promise(resolve => {
+                    var args = {
+                        doctype: me.doctype,
+                        txt: txt,
+                        query: 'frappe_list_unassign_from.api.unassign_from.search_link',
+                        filters: {docname: me.docname}
+                    };
+                    return new Promise(function(resolve, reject) {
                         frappe.call({
                             type: 'GET',
                             method: 'frappe.desk.search.search_link',
-                            args: {
-                                doctype,
-                                txt,
-                                query,
-                                filters
-                            },
-                            callback(r) {
-                                resolve(r.results);
+                            args: args,
+                            callback: function(r) {
+                                resolve(r.values);
                             }
                         });
                     });
                 }
-            },
+            }
         ];
     }
 }

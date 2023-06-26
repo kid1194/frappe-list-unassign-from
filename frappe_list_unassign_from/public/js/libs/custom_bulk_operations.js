@@ -1,3 +1,11 @@
+/*
+* Frappe List Unassign Form © 2023
+* Author:  Ameen Ahmed
+* Company: Level Up Marketing & Software Development Services
+* Licence: Please refer to LICENSE file
+*/
+
+
 import {
     UnassignFromDialog
 } from './unassign_from_dialog.js';
@@ -10,9 +18,9 @@ export class CustomBulkOperations {
     // unassignment
     unassign(docnames, done) {
         if (docnames.length > 0) {
-            const unassign_from = new UnassignFromDialog({
+            var unassign_from = new UnassignFromDialog({
                 obj: this,
-                method: 'frappe_list_unassign_from.api.unassign_from.remove_multiple',
+                method: 'frappe_list_unassign_from.api.remove_multiple',
                 doctype: this.doctype,
                 docname: docnames,
                 callback: done

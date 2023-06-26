@@ -1,3 +1,11 @@
+/*
+* Frappe List Unassign Form © 2023
+* Author:  Ameen Ahmed
+* Company: Level Up Marketing & Software Development Services
+* Licence: Please refer to LICENSE file
+*/
+
+
 export class UnassignFromDialog {
     constructor(opts) {
         $.extend(this, opts);
@@ -6,17 +14,17 @@ export class UnassignFromDialog {
         this.set_description_from_doc();
     }
     make() {
-        let me = this;
+        var me = this;
 
         me.dialog = new frappe.ui.Dialog({
             title: __('Remove from ToDo'),
             fields: me.get_fields(),
-            primary_action_label: __("Remove"),
+            primary_action_label: __('Remove'),
             primary_action: function() {
-                let args = me.dialog.get_values();
+                var args = me.dialog.get_values();
 
                 if (args && args.unassign_from) {
-                    me.dialog.set_message("Unassigning...");
+                    me.dialog.set_message('Unassigning...');
 
                     frappe.call({
                         method: me.method,
@@ -42,28 +50,28 @@ export class UnassignFromDialog {
         });
     }
     unassign_from_me() {
-        let me = this;
-        let unassign_from = [];
+        var me = this,
+        unassign_from = [];
 
-        if (me.dialog.get_value("unassign_from_me")) {
+        if (me.dialog.get_value('unassign_from_me')) {
             unassign_from.push(frappe.session.user);
         }
 
-        me.dialog.set_value("unassign_from", unassign_from);
+        me.dialog.set_value('unassign_from', unassign_from);
     }
     set_description_from_doc() {
-        let me = this;
+        var me = this;
 
         if (me.frm && me.frm.meta.title_field) {
-            me.dialog.set_value("description", me.frm.doc[me.frm.meta.title_field]);
+            me.dialog.set_value('description', me.frm.doc[me.frm.meta.title_field]);
         }
     }
     get_fields() {
-        let me = this;
+        var me = this;
 
         return [
             {
-                label: __("Unassign from me"),
+                label: __('Unassign from me'),
                 fieldtype: 'Check',
                 fieldname: 'unassign_from_me',
                 default: 0,
@@ -72,13 +80,13 @@ export class UnassignFromDialog {
             {
                 fieldtype: 'MultiSelectPills',
                 fieldname: 'unassign_from',
-                label: __("Unassign From"),
+                label: __('Unassign From'),
                 reqd: true,
                 get_data: function(txt) {
                     var args = {
                         doctype: me.doctype,
                         txt: txt,
-                        query: 'frappe_list_unassign_from.api.unassign_from.search_link',
+                        query: 'frappe_list_unassign_from.api.search_link',
                         filters: {docname: me.docname}
                     };
                     return new Promise(function(resolve, reject) {

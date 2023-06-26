@@ -1,55 +1,64 @@
+/*
+* Frappe List Unassign Form © 2023
+* Author:  Ameen Ahmed
+* Company: Level Up Marketing & Software Development Services
+* Licence: Please refer to LICENSE file
+*/
+
+
 import {
     CustomBulkOperations
 } from './libs/custom_bulk_operations.js';
 
 frappe.views.ListView = class ListView extends frappe.views.ListView {
     get_actions_menu_items() {
-        const doctype = this.doctype;
-        const actions_menu_items = super.get_actions_menu_items();
-        const bulk_operations = new CustomBulkOperations({doctype: this.doctype});
+        var me = this,
+        doctype = this.doctype,
+        actions_menu_items = super.get_actions_menu_items(),
+        bulk_operations = new CustomBulkOperations({doctype: this.doctype}),
 
-        const is_field_editable = (field_doc) => {
+        is_field_editable = function(field_doc) {
             return (
                 field_doc.fieldname &&
                 frappe.model.is_value_type(field_doc) &&
-                field_doc.fieldtype !== "Read Only" &&
+                field_doc.fieldtype !== 'Read Only' &&
                 !field_doc.hidden &&
                 !field_doc.read_only &&
                 !field_doc.is_virtual
             );
-        };
+        },
 
-        const has_editable_fields = (doctype) => {
+        has_editable_fields = function(doctype) {
             return frappe.meta
                 .get_docfields(doctype)
-                .some((field_doc) => is_field_editable(field_doc));
-        };
+                .some(function(field_doc) { return is_field_editable(field_doc); });
+        },
         
         // unassignment
-        const bulk_unassignment = () => {
+        bulk_unassignment = function() {
             return {
-                label: __("Unassign From", null, "Button in list view actions menu"),
-                action: () => {
-                    this.disable_list_update = true;
+                label: __('Unassign From', null, 'Button in list view actions menu'),
+                action: function() {
+                    me.disable_list_update = true;
                     bulk_operations.unassign(
-                        this.get_checked_items(true),
-                        () => {
-                            this.disable_list_update = false;
-                            this.clear_checked_items();
-                            this.refresh();
+                        me.get_checked_items(true),
+                        function() {
+                            me.disable_list_update = false;
+                            me.clear_checked_items();
+                            me.refresh();
                         }
                     );
                 },
                 standard: true,
             };
-        };
+        },
         
-        let idx = 3;
+        idx = 3;
         // bulk edit
         if (has_editable_fields(doctype)) idx++;
         // unassignment
         actions_menu_items.splice(idx, 0, bulk_unassignment());
-
+        
         return actions_menu_items;
     }
 };

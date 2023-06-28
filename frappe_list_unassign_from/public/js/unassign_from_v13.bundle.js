@@ -15,7 +15,7 @@ frappe.views.ListView = class ListView extends frappe.views.ListView {
     get_actions_menu_items() {
         var me = this,
         doctype = this.doctype,
-        actions_menu_items = this._super(),
+        actions_menu_items = super.get_actions_menu_items(),
         bulk_operations = new CustomBulkOperations({doctype: this.doctype}),
 
         is_field_editable = function(field_doc) {

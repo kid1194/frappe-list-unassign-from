@@ -10,6 +10,7 @@ import {
     CustomBulkOperations
 } from './libs/custom_bulk_operations.js';
 
+
 frappe.views.ListView = class ListView extends frappe.views.ListView {
     get_actions_menu_items() {
         var me = this,

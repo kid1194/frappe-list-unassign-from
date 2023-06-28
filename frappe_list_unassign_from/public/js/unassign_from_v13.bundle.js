@@ -10,8 +10,9 @@ import {
     CustomBulkOperations
 } from './libs/custom_bulk_operations.js';
 
-frappe.views.ListView = frappe.views.ListView.extend({
-    get_actions_menu_items: function() {
+
+frappe.views.ListView = class ListView extends frappe.views.ListView {
+    get_actions_menu_items() {
         var me = this,
         doctype = this.doctype,
         actions_menu_items = this._super(),
@@ -58,4 +59,4 @@ frappe.views.ListView = frappe.views.ListView.extend({
         
         return actions_menu_items;
     }
-});
+};

@@ -1,19 +1,23 @@
 # Frappe List Unassign From
+
 A Frappe plugin that adds the support of unassign from for multiple selection in list.
 
+---
+
+### Special Thanks 
+**A simple display of gratitude and appreciation to those who provided helped and kind support.**
+- [RJPvT](https://github.com/RJPvT) (Testing)
+
+---
+
 ### Table of Contents
-<ul>
-    <li><a href="#requirements">Requirements</a></li>
-    <li>
-        <a href="#setup">Setup</a>
-        <ul>
-            <li><a href="#install">Install</a></li>
-            <li><a href="#update">Update</a></li>
-            <li><a href="#uninstall">Uninstall</a></li>
-        </ul>
-    </li>
-    <li><a href="#license">License</a></li>
-</ul>
+- [Requirements](#requirements)
+- [Setup](#setup)
+  - [Install](#install)
+  - [Update](#update)
+  - [Uninstall](#uninstall)
+- [Issues](#issues)
+- [License](#license)
 
 ---
 
@@ -61,5 +65,10 @@ A Frappe plugin that adds the support of unassign from for multiple selection in
 
 ---
 
+### Issues
+If you find bug in the plugin, please create a [bug report](https://github.com/kid1194/frappe-list-unassign-from/issues/new?assignees=kid1194&labels=bug&template=bug_report.md&title=%5BBUG%5D) and let us know about it.
+
+---
+
 ### License
-MIT
+This repository has been released under the [MIT License](https://github.com/kid1194/frappe-list-unassign-from/blob/main/LICENSE).

@@ -1,3 +1,5 @@
 {
-  "js/unassign_from.js": ["public/js/unassign_from_v13.bundle.js"]
+    "frappe_list_unassign_from/js/unassign_from.js": [
+        "public/js/unassign_from_v13.bundle.js"
+    ]
 }

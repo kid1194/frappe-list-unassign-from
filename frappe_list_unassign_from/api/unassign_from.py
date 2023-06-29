@@ -9,8 +9,7 @@ from frappe.desk.form.assign_to import set_status
 
 
 @frappe.whitelist()
-@frappe.validate_and_sanitize_search_inputs
-def search_link(doctype, txt, searchfield, start, page_length, filters):
+def search_link(doctype, txt, searchfield, start, page_len, filters):
     if not hasattr(filters, "docname"):
         return []
     
@@ -39,7 +38,7 @@ def search_link(doctype, txt, searchfield, start, page_length, filters):
         fields=fields,
         filters=filters,
         limit_start=start,
-        limit_page_length=page_length,
+        limit_page_length=page_len,
         order_by=order_by,
         ignore_permissions=True,
         as_list=False

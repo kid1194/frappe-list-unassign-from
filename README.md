@@ -11,12 +11,12 @@ A Frappe plugin that adds the support of unassign from users for single and mult
 
 ---
 
-<div style="width:100%;text-align:center">
+<p align="center">
     <img src="https://github.com/kid1194/frappe-list-unassign-from/blob/main/images/list_unassign_from_1.jpg?raw=true" alt="List Unassign From"/>
-</div>
-<div style="width:100%;text-align:center">
+</p>
+<p align="center">
     <img src="https://github.com/kid1194/frappe-list-unassign-from/blob/main/images/list_unassign_from_2.jpg?raw=true" alt="List Unassign From"/>
-</div>
+</p>
 
 ---
 

@@ -7,6 +7,16 @@ A Frappe plugin that adds the support of unassign from users for single and mult
 ### Special Thanks 
 **A simple display of gratitude and appreciation to those who provided help and kind support.**
 - [RJPvT](https://github.com/RJPvT) (Testing)
+- [Ragul KM](https://github.com/crazy-explore-r) (Bug Reporting & Screenshots)
+
+---
+
+<div style="width:100%;text-align:center">
+    <img src="https://github.com/kid1194/frappe-list-unassign-from/blob/main/images/list_unassign_from_1.jpg?raw=true" alt="List Unassign From"/>
+</div>
+<div style="width:100%;text-align:center">
+    <img src="https://github.com/kid1194/frappe-list-unassign-from/blob/main/images/list_unassign_from_2.jpg?raw=true" alt="List Unassign From"/>
+</div>
 
 ---
 
@@ -67,9 +77,10 @@ A Frappe plugin that adds the support of unassign from users for single and mult
 ---
 
 ### Usage
-1. Go to **ToDo** doctype list and select a single or multiple entries
-2. Click on the **Actions** button and then from the actions menu click on **Unassign From**
-3. From the **Remove From ToDo** dialog, select the users that you want to unassign the selected entries from and then click on the **Remove** button at the end of the dialog 
+1. Go to any doctype's list, ex: **Role**, and select a single or multiple entries
+2. Click on the **Actions** button from the top of the page and click on **Unassign From** action
+3. From the **Remove From ToDo** dialog, add the users that you want to unassign the entries from
+4. Finally, click on the **Remove** button at the bottom of the dialog
 
 ---
 

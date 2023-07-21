@@ -17,14 +17,14 @@ export class UnassignFromDialog {
         var me = this;
 
         me.dialog = new frappe.ui.Dialog({
-            title: __('Remove from ToDo'),
+            title: __('Remove From ToDo'),
             fields: me.get_fields(),
             primary_action_label: __('Remove'),
             primary_action: function() {
                 var args = me.dialog.get_values();
 
                 if (args && args.unassign_from) {
-                    me.dialog.set_message('Unassigning...');
+                    me.dialog.set_message(__('Unassigning') + '...');
 
                     frappe.call({
                         method: me.method,

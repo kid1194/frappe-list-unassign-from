@@ -12,7 +12,7 @@ import {
 
 export class CustomBulkOperations {
     constructor({ doctype }) {
-        if (!doctype) frappe.throw(__('Doctype required'));
+        if (!doctype) frappe.throw(__('Doctype is not provided'));
         this.doctype = doctype;
     }
     // unassignment
@@ -28,7 +28,7 @@ export class CustomBulkOperations {
             unassign_from.dialog.clear();
             unassign_from.dialog.show();
         } else {
-            frappe.msgprint(__('Select records to remove assignment'));
+            frappe.msgprint(__('Select a single or multiple entries to unassign users from'));
         }
     }
 }

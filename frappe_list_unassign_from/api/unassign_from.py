@@ -5,7 +5,7 @@
 
 
 import frappe
-from frappe.desk.form.assign_to import set_status
+from frappe.desk.form.assign_to import notify_assignment
 
 
 @frappe.whitelist()
@@ -71,3 +71,30 @@ def remove_multiple(args=None):
             set_status(args.get("doctype"), docname, unassign_from, status="Cancelled")
     
     return 1
+
+
+def set_status(doctype, name, assign_to, status):
+    try:
+        dt = "ToDo"
+        todo = frappe.db.get_value(
+            dt,
+            {
+                "reference_type": doctype,
+                "reference_name": name,
+                "allocated_to": assign_to,
+                "status": ("!=", status),
+            },
+        )
+        if todo:
+            if frappe.db.exists(dt, todo):
+                todo = frappe.get_doc(dt, todo)
+                todo.status = status
+                todo.save(ignore_permissions=True)
+
+                #notify_assignment(todo.assigned_by, todo.allocated_to, todo.reference_type, todo.reference_name)
+    
+        if frappe.get_meta(doctype).get_field("assigned_to") and status == "Cancelled":
+            frappe.db.set_value(doctype, name, "assigned_to", None)
+    
+    except Exception:
+        pass

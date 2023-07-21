@@ -1,11 +1,11 @@
 # Frappe List Unassign From
 
-A Frappe plugin that adds the support of unassign from for multiple selection in list.
+A Frappe plugin that adds the support of unassign from users for single and multiple list selection.
 
 ---
 
 ### Special Thanks 
-**A simple display of gratitude and appreciation to those who provided helped and kind support.**
+**A simple display of gratitude and appreciation to those who provided help and kind support.**
 - [RJPvT](https://github.com/RJPvT) (Testing)
 
 ---
@@ -16,6 +16,7 @@ A Frappe plugin that adds the support of unassign from for multiple selection in
   - [Install](#install)
   - [Update](#update)
   - [Uninstall](#uninstall)
+- [Usage](#usage)
 - [Issues](#issues)
 - [License](#license)
 
@@ -62,6 +63,13 @@ A Frappe plugin that adds the support of unassign from for multiple selection in
 2. Uninstall the plugin from bench
 
 `bench remove-app frappe_list_unassign_from`
+
+---
+
+### Usage
+1. Go to **ToDo** doctype list and select a single or multiple entries
+2. Click on the **Actions** button and then from the actions menu click on **Unassign From**
+3. From the **Remove From ToDo** dialog, select the users that you want to unassign the selected entries from and then click on the **Remove** button at the end of the dialog 
 
 ---
 

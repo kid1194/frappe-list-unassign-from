@@ -3,7 +3,7 @@ name = "frappe_list_unassign_from"
 authors = [
     {name = "Ameen Ahmed (Level Up)", email = "kid1194@gmail.com"}
 ]
-description = "A Frappe plugin that adds the support of unassign from for multiple selection in list."
+description = "A Frappe plugin that adds the support of unassign from users for single and multiple list selection."
 requires-python = ">=3.6"
 readme = "README.md"
 dynamic = ["version"]

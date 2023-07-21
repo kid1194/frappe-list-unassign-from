@@ -1,4 +1,4 @@
-# Frappe List Unassign Form © 2023
+# Frappe List Unassign From © 2023
 # Author:  Ameen Ahmed
 # Company: Level Up Marketing & Software Development Services
 # Licence: Please refer to LICENSE file
@@ -15,7 +15,7 @@ with open("requirements.txt") as f:
 setup(
     name="frappe_list_unassign_from",
     version=version,
-    description="A Frappe plugin that adds the support of project tasks single or multiple unassign.",
+    description="A Frappe plugin that adds the support of unassign from users for single and multiple list selection.",
     author="Ameen Ahmed (Level Up)",
     author_email="kid1194@gmail.com",
     packages=find_packages(),

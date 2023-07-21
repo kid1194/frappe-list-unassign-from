@@ -1,5 +1,5 @@
 /*
-* Frappe List Unassign Form © 2023
+* Frappe List Unassign From © 2023
 * Author:  Ameen Ahmed
 * Company: Level Up Marketing & Software Development Services
 * Licence: Please refer to LICENSE file
@@ -95,7 +95,7 @@ export class UnassignFromDialog {
                             method: 'frappe.desk.search.search_link',
                             args: args,
                             callback: function(r) {
-                                resolve(r.values);
+                                resolve(r.results || r.values);
                             }
                         });
                     });

@@ -1,16 +1,18 @@
-# Frappe List Unassign Form © 2023
+# Frappe List Unassign From © 2023
 # Author:  Ameen Ahmed
 # Company: Level Up Marketing & Software Development Services
 # Licence: Please refer to LICENSE file
 
 
 import frappe
+from frappe import _
+
 from frappe.desk.form.assign_to import notify_assignment
 
 
 @frappe.whitelist()
-def search_link(doctype, txt, searchfield, start, page_len, filters):
-    if not hasattr(filters, "docname"):
+def search_link(doctype, txt, searchfield, start, page_len, filters, as_dict=False):
+    if not filters or not hasattr(filters, "docname"):
         return []
     
     dt = "ToDo"
@@ -62,26 +64,33 @@ def remove_multiple(args=None):
         not hasattr(args, "unassign_from")
     ):
         return 0
-
-    docname_list = frappe.parse_json(args.get("name"))
-    unassign_from_list = frappe.parse_json(args.get("unassign_from"))
-
-    for docname in docname_list:
-        for unassign_from in unassign_from_list:
-            set_status(args.get("doctype"), docname, unassign_from, status="Cancelled")
+    
+    try:
+        
+        docname_list = frappe.parse_json(args.get("name"))
+        unassign_from_list = frappe.parse_json(args.get("unassign_from"))
+    
+        for docname in docname_list:
+            for unassign_from in unassign_from_list:
+                make_cancelled(args.get("doctype"), docname, unassign_from)
+    
+    except Exception as exc:
+        frappe.log_error(_("List Unassign From"), str(exc))
+        return 0
     
     return 1
 
 
-def set_status(doctype, name, assign_to, status):
+def make_cancelled(doctype, name, unassign_from):
     try:
         dt = "ToDo"
+        status = "Cancelled"
         todo = frappe.db.get_value(
             dt,
             {
                 "reference_type": doctype,
                 "reference_name": name,
-                "allocated_to": assign_to,
+                "allocated_to": unassign_from,
                 "status": ("!=", status),
             },
         )
@@ -90,11 +99,16 @@ def set_status(doctype, name, assign_to, status):
                 todo = frappe.get_doc(dt, todo)
                 todo.status = status
                 todo.save(ignore_permissions=True)
-
-                #notify_assignment(todo.assigned_by, todo.allocated_to, todo.reference_type, todo.reference_name)
+                
+                if (
+                    todo.assigned_by != todo.allocated_to and
+                    frappe.db.exists("User", todo.allocated_to) and
+                    frappe.db.exists("User", todo.assigned_by)
+                );
+                    notify_assignment(todo.assigned_by, todo.allocated_to, todo.reference_type, todo.reference_name)
     
-        if frappe.get_meta(doctype).get_field("assigned_to") and status == "Cancelled":
+        if frappe.get_meta(doctype).get_field("assigned_to"):
             frappe.db.set_value(doctype, name, "assigned_to", None)
     
-    except Exception:
-        pass
+    except Exception as exc:
+        frappe.log_error(_("List Unassign From"), str(exc))

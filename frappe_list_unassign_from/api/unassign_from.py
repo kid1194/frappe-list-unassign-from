@@ -104,7 +104,7 @@ def make_cancelled(doctype, name, unassign_from):
                     todo.assigned_by != todo.allocated_to and
                     frappe.db.exists("User", todo.allocated_to) and
                     frappe.db.exists("User", todo.assigned_by)
-                );
+                ):
                     notify_assignment(todo.assigned_by, todo.allocated_to, todo.reference_type, todo.reference_name)
     
         if frappe.get_meta(doctype).get_field("assigned_to"):

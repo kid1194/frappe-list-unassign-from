@@ -9,36 +9,31 @@
 export class UnassignFromDialog {
     constructor(opts) {
         $.extend(this, opts);
-
         this.make();
         this.set_description_from_doc();
     }
     make() {
         var me = this;
-
-        me.dialog = new frappe.ui.Dialog({
+        this.dialog = new frappe.ui.Dialog({
             title: __('Remove From ToDo'),
-            fields: me.get_fields(),
+            fields: this.get_fields(),
             primary_action_label: __('Remove'),
             primary_action: function() {
                 var args = me.dialog.get_values();
-
                 if (args && args.unassign_from) {
+                    console.log('[UnassignFrom][Dialog]', args.unassign_from);
                     me.dialog.set_message(__('Unassigning') + '...');
-
                     frappe.call({
                         method: me.method,
                         args: $.extend(args, {
                             doctype: me.doctype,
-                            name: me.docname,
+                            docnames: me.docnames,
                             unassign_from: args.unassign_from
                         }),
                         btn: me.dialog.get_primary_btn(),
                         callback: function(r) {
                             if (!r.exc) {
-                                if (me.callback) {
-                                    me.callback(r);
-                                }
+                                if (me.callback) me.callback(r);
                                 me.dialog && me.dialog.hide();
                             } else {
                                 me.dialog.clear_message();
@@ -50,25 +45,20 @@ export class UnassignFromDialog {
         });
     }
     unassign_from_me() {
-        var me = this,
-        unassign_from = [];
-
-        if (me.dialog.get_value('unassign_from_me')) {
-            unassign_from.push(frappe.session.user);
+        if (this.dialog.get_value('unassign_from_me')) {
+            var unassign_from = this.dialog.get_value('unassign_from');
+            if (!$.isArray(unassign_from))
+                unassign_from = [frappe.session.user];
+            else unassign_from.unshift(frappe.session.user);
+            this.dialog.set_value('unassign_from', unassign_from);
         }
-
-        me.dialog.set_value('unassign_from', unassign_from);
     }
     set_description_from_doc() {
-        var me = this;
-
-        if (me.frm && me.frm.meta.title_field) {
-            me.dialog.set_value('description', me.frm.doc[me.frm.meta.title_field]);
-        }
+        if (this.frm && this.frm.meta.title_field)
+            this.dialog.set_value('description', this.frm.doc[this.frm.meta.title_field]);
     }
     get_fields() {
         var me = this;
-
         return [
             {
                 label: __('Unassign from me'),
@@ -87,7 +77,7 @@ export class UnassignFromDialog {
                         doctype: me.doctype,
                         txt: txt,
                         query: 'frappe_list_unassign_from.api.search_link',
-                        filters: {docname: me.docname}
+                        filters: {docnames: me.docnames}
                     };
                     return new Promise(function(resolve, reject) {
                         frappe.call({
@@ -95,7 +85,8 @@ export class UnassignFromDialog {
                             method: 'frappe.desk.search.search_link',
                             args: args,
                             callback: function(r) {
-                                resolve(r.results || r.values);
+                                console.log('[UnassignFrom][Dialog]', r.values || r.results);
+                                resolve(r.values || r.results);
                             }
                         });
                     });

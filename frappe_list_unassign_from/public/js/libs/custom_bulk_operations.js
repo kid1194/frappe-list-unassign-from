@@ -18,11 +18,12 @@ export class CustomBulkOperations {
     // unassignment
     unassign(docnames, done) {
         if (docnames.length > 0) {
+            console.log('[UnassignFrom][Action]', docnames);
             var unassign_from = new UnassignFromDialog({
                 obj: this,
                 method: 'frappe_list_unassign_from.api.remove_multiple',
                 doctype: this.doctype,
-                docname: docnames,
+                docnames: docnames,
                 callback: done
             });
             unassign_from.dialog.clear();

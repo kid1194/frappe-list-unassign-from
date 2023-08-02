@@ -21,7 +21,6 @@ export class UnassignFromDialog {
             primary_action: function() {
                 var args = me.dialog.get_values();
                 if (args && args.unassign_from) {
-                    console.log('[UnassignFrom][Dialog]', args.unassign_from);
                     me.dialog.set_message(__('Unassigning') + '...');
                     frappe.call({
                         method: me.method,
@@ -76,17 +75,19 @@ export class UnassignFromDialog {
                     var args = {
                         doctype: me.doctype,
                         txt: txt,
-                        query: 'frappe_list_unassign_from.api.search_link',
                         filters: {docnames: me.docnames}
                     };
                     return new Promise(function(resolve, reject) {
                         frappe.call({
-                            type: 'GET',
-                            method: 'frappe.desk.search.search_link',
+                            type: 'POST',
+                            method: 'frappe_list_unassign_from.api.search_link',
                             args: args,
-                            callback: function(r) {
-                                console.log('[UnassignFrom][Dialog]', r.values || r.results);
-                                resolve(r.values || r.results);
+                            callback: function(ret) {
+                                if (ret && $.isPlainObject(ret)) ret = ret.message || ret;
+                                resolve(ret);
+                            },
+                            error: function() {
+                                reject();
                             }
                         });
                     });

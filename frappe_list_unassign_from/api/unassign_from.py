@@ -11,8 +11,8 @@ from frappe import __version__ as frappe_version
 from frappe.desk.form.assign_to import notify_assignment
 
 
-@frappe.whitelist()
-def search_link(doctype, txt, searchfield, start, page_len, filters, as_dict=False):
+@frappe.whitelist(methods=["POST"])
+def search_link(doctype, txt, filters):
     if not filters or not hasattr(filters, "docnames"):
         return []
     
@@ -21,6 +21,10 @@ def search_link(doctype, txt, searchfield, start, page_len, filters, as_dict=Fal
     allocated_to = "allocated_to" if is_frappe_above_v13 else "owner"
     
     fields = []
+    fields.append("""`tab{doctype}`.`{column}`""".format(
+        doctype=dt,
+        column=allocated_to
+    ))
     fields.append("""`tab{doctype}`.`{column}`""".format(
         doctype=dt,
         column=allocated_to
@@ -44,26 +48,22 @@ def search_link(doctype, txt, searchfield, start, page_len, filters, as_dict=Fal
         
         order_by = "_relevance desc"
     
-    data = frappe.get_all(
+    values = frappe.get_list(
         dt,
         fields=fields,
         filters=filters,
-        limit_start=start,
-        limit_page_length=page_len,
+        limit_start=0,
+        limit_page_length=20,
         order_by=order_by,
         ignore_permissions=True,
-        as_list=False
+        as_list=True,
+        strict=False
     )
     
-    if not data:
-        return []
+    if values and txt:
+        values = [r[:-1] for r in values]
     
-    if is_frappe_above_v13:
-        users = [[v.allocated_to, v.allocated_to] for v in data]
-    else:
-        users = [[v.owner, v.owner] for v in data]
-    
-    return users
+    return values
 
 
 @frappe.whitelist()

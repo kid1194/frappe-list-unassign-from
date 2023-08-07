@@ -72,7 +72,7 @@ export class UnassignFromDialog {
                 label: __('Unassign From'),
                 reqd: true,
                 get_data: function(txt) {
-                    var args = {
+                    /*var args = {
                         doctype: me.doctype,
                         txt: txt,
                         filters: {docnames: me.docnames}
@@ -92,7 +92,7 @@ export class UnassignFromDialog {
                                 reject();
                             }
                         });
-                    });
+                    });*/
                     return frappe.db.get_link_options('User', txt, {user_type: 'System User', enabled: 1});
                 }
             }

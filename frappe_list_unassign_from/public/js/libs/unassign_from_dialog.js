@@ -77,20 +77,23 @@ export class UnassignFromDialog {
                         txt: txt,
                         filters: {docnames: me.docnames}
                     };
-                    return new Promise(function(resolve, reject) {
+                    new Promise(function(resolve, reject) {
                         frappe.call({
                             type: 'POST',
                             method: 'frappe_list_unassign_from.api.search_link',
                             args: args,
                             callback: function(ret) {
+                                console.log('[UnassignFromDialog]', ret);
                                 if (ret && $.isPlainObject(ret)) ret = ret.message || ret;
                                 resolve(ret);
                             },
                             error: function() {
+                                console.error('[UnassignFromDialog]', 'request error');
                                 reject();
                             }
                         });
                     });
+                    return frappe.db.get_link_options('User', txt, {user_type: 'System User', enabled: 1});
                 }
             }
         ];

@@ -4,5 +4,8 @@
 # Licence: Please refer to LICENSE file
 
 
-__version__ = "1.0.8"
-__production__ = False
+from frappe import __version__ as frappe_version
+
+
+__version__ = "1.0.9"
+__frappe_version_min_14__ = int(frappe_version.split(".")[0]) > 13

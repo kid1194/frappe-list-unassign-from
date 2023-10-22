@@ -11,7 +11,7 @@ import {
 } from './unassign_from_dialog.js';
 
 export class CustomBulkOperations {
-    constructor({ doctype }) {
+    constructor(doctype) {
         if (!doctype) frappe.throw(__('Doctype is not provided'));
         this.doctype = doctype;
     }

@@ -4,8 +4,7 @@
 # Licence: Please refer to LICENSE file
 
 
-from . import __version__ as app_version
-from frappe import __version__ as frappe_version
+from . import __frappe_version_min_14__
 
 
 app_name = "frappe_list_unassign_from"
@@ -16,11 +15,10 @@ app_icon = "octicon octicon-table"
 app_color = "blue"
 app_email = "kid1194@gmail.com"
 app_license = "MIT"
-is_frappe_above_v13 = int(frappe_version.split(".")[0]) > 13
 
 
 app_include_js = [
     "unassign_from.bundle.js"
-] if is_frappe_above_v13 else [
+] if __frappe_version_min_14__ else [
     "/assets/frappe_list_unassign_from/js/unassign_from.js"
 ]

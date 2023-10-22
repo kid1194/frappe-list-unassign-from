@@ -6,64 +6,10 @@
 
 import frappe
 from frappe import _
-from frappe import __version__ as frappe_version
 
 from frappe.desk.form.assign_to import notify_assignment
 
-
-@frappe.whitelist(methods=["POST"])
-def search_link(doctype, txt, filters):
-    if not filters or not hasattr(filters, "docnames"):
-        return []
-    
-    dt = "ToDo"
-    is_frappe_above_v13 = int(frappe_version.split('.')[0]) > 13
-    allocated_to = "allocated_to" if is_frappe_above_v13 else "owner"
-    
-    fields = []
-    fields.append("""`tab{doctype}`.`{column}`""".format(
-        doctype=dt,
-        column=allocated_to
-    ))
-    fields.append("""`tab{doctype}`.`{column}`""".format(
-        doctype=dt,
-        column=allocated_to
-    ))
-    
-    filters = []
-    filters.append([dt, "status", "=", "Open"])
-    filters.append([dt, "reference_type", "=", doctype])
-    filters.append([dt, "reference_name", "in", filters.get("docnames")])
-    
-    order_by = None
-    
-    if txt:
-        fields.append("""locate({_txt}, `tab{doctype}`.`{column}`) as `_relevance`""".format(
-            _txt=frappe.db.escape((txt or "").replace("%", "").replace("@", "")),
-            doctype=dt,
-            column=allocated_to
-        ))
-        
-        filters.append([dt, allocated_to, "like", "%{0}%".format(txt)])
-        
-        order_by = "_relevance desc"
-    
-    values = frappe.get_list(
-        dt,
-        fields=fields,
-        filters=filters,
-        limit_start=0,
-        limit_page_length=20,
-        order_by=order_by,
-        ignore_permissions=True,
-        as_list=True,
-        strict=False
-    )
-    
-    if values and txt:
-        values = [r[:-1] for r in values]
-    
-    return values
+from frappe_list_unassign_from import __frappe_version_min_14__
 
 
 @frappe.whitelist()
@@ -72,6 +18,8 @@ def remove_multiple(args=None):
         args = frappe.local.form_dict
     
     if (
+        not args or
+        not isinstance(args, dict) or
         not hasattr(args, "doctype") or
         not hasattr(args, "docnames") or
         not hasattr(args, "unassign_from")
@@ -97,8 +45,7 @@ def remove_multiple(args=None):
 def make_cancelled(doctype, docname, unassign_from):
     try:
         dt = "ToDo"
-        is_frappe_above_v13 = int(frappe_version.split('.')[0]) > 13
-        allocated_to = "allocated_to" if is_frappe_above_v13 else "owner"
+        allocated_to = "allocated_to" if __frappe_version_min_14__ else "owner"
         status = "Cancelled"
         
         args = {

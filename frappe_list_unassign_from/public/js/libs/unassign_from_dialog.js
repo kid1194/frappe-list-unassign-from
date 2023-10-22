@@ -66,8 +66,8 @@ export class UnassignFromDialog {
                 reqd: true,
                 onchange: function() {
                     try {
-                        var vals = this.get_values(),
-                        idx = vals.indexOf(frappe.session.user);
+                        var vals = this.get_values() || [],
+                        idx = $.isArray(vals) ? vals.indexOf(frappe.session.user) : -1;
                         if (idx >= 0) {
                             vals.splice(idx, 1);
                             me.dialog.set_value('unassign_from_me', 1);

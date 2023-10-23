@@ -9,7 +9,7 @@ from frappe import _
 
 from frappe.desk.form.assign_to import notify_assignment
 
-from frappe_list_unassign_from import __frappe_version_min_14__
+from frappe_list_unassign_from.version import __frappe_version_min_14__
 
 
 @frappe.whitelist()
